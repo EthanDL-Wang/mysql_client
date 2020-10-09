@@ -1,0 +1,29 @@
+###############################################################################
+# Server
+##############################################################################
+FROM ubuntu:18.04
+
+RUN apt update \
+    && apt install -y vim \
+	&& apt install -y gcc \
+    && apt install -y make \
+    && apt install -y libmysqlclient-dev
+
+
+ENV APP app
+RUN mkdir /${APP}
+WORKDIR /${APP}
+COPY ./daemon ./daemon
+RUN cd daemon && make mysql_client
+RUN ls -l /${APP}/daemon/
+
+
+
+
+
+
+
+#CMD ["bash"]
+CMD ["/app/daemon/mysql_client"]
+
+
